@@ -2,14 +2,14 @@ import pymmcore
 from pathlib import Path
 
 class Stage:
-    def __init__(self, port="COM7") -> None:
+    def __init__(self, port="COM5") -> None:
         self.speed = 3000
         self.home_speed = 500
         self.mmc = pymmcore.CMMCore()
         # find file searchpath
         script_dir = Path(__file__).parent.absolute()
         self.mmc.setDeviceAdapterSearchPaths([f"{script_dir}/../micro_manager_config"])
-        self.mmc.loadDevice("COM7", "SerialManager", "COM7")
+        self.mmc.loadDevice(port, "SerialManager", port)
         self.mmc.loadDevice("LudlController", "Ludl", "LudlController")
         self.mmc.loadDevice("XYStage", "Ludl", "XYStage")
         self.mmc.setProperty(port, "AnswerTimeout", "2000.0") 

@@ -22,14 +22,15 @@ if __name__=="__main__":
     os.makedirs(logdata_dir)
 
     # load stage info
-    stage=Stage(port="COM7")
+    stage=Stage(port="COM5")
 
     # load camera
-    cam = infinity_cam(1+cv2.CAP_DSHOW)
+    cam = infinity_cam(0+cv2.CAP_DSHOW)
 
     input("Enter to Home")
     stage.home()
     stage.move(START_X, START_Y)
+
     x, y = stage.read_position()
     print(f"At ({x:.2f}, {y:.2f})")
     img = cam.cap_image(display=True)
