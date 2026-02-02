@@ -40,6 +40,7 @@ class Stage:
         self.mmc.setProperty("XYStage", "Speed", f"{self.home_speed}")
         self.mmc.home("XYStage")
         self.mmc.waitForDevice("XYStage")
+        self.mmc.setOriginXY("XYStage")
         self.mmc.setProperty("XYStage", "Speed", f"{self.speed}")
 
     def read_position(self):
@@ -49,9 +50,6 @@ if __name__=="__main__":
     stage = Stage()
     stage.home()
     i=0
-    while i<10:
-        input()
-        stage.home()
-        print("homed")
-        stage.move(4000, 4000)
-        i+=1
+    while True:
+        print(stage.read_position())
+

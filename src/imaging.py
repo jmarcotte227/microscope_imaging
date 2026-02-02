@@ -1,3 +1,5 @@
+#This code shows front camera (I dont know why)
+
 import cv2
 
 class infinity_cam():
@@ -24,9 +26,11 @@ class infinity_cam():
         while (True):
             success, frame = self.cam.read()
             if success:  # frame read successfully
+                frame = cv2.flip(frame, 1)
+                frame = cv2.flip(frame, 0)
                 height, width = frame.shape[:2]
                 center = (width // 2, height // 2)
-                cv2.drawMarker(frame, center, (0, 255, 0), markerType=cv2.MARKER_CROSS, 
+                cv2.drawMarker(frame, center, (0, 255, 0), markerType=cv2.MARKER_CROSS,
                markerSize=50, thickness=2)
                 cv2.imshow('show', frame)
                 k = cv2.waitKey(1)
@@ -34,6 +38,6 @@ class infinity_cam():
                     break
 
 if __name__=="__main__":
-    cam = infinity_cam(1+cv2.CAP_DSHOW)
+    cam = infinity_cam(0+cv2.CAP_DSHOW)
     cam.stream()
     cam.cap_image(display=True)
