@@ -9,7 +9,7 @@ if __name__=="__main__":
     # IMG_H = 350
     IMG_W = 400
     IMG_H = 350
-    START_X = 0
+    START_X = 3200
     START_Y = 12000
     NUM_X = 3
     NUM_Y = 3
