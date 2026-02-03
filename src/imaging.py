@@ -21,6 +21,7 @@ class infinity_cam():
         if display:
             cv2.imshow('Captured Image', img)
             cv2.waitKey(0)
+            cv2.destroyWindow('Captured Image')
         return img
     def stream(self):
         while (True):
@@ -36,6 +37,7 @@ class infinity_cam():
                 k = cv2.waitKey(1)
                 if k == ord('q'):
                     break
+        cv2.destroyWindow('show')
 
 if __name__=="__main__":
     cam = infinity_cam(0+cv2.CAP_DSHOW)

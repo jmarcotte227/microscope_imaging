@@ -2,7 +2,7 @@ import cv2
 from glob import glob
 
 if __name__=="__main__":
-    DATASET = "img_sample_2026_01_30_17_36_30"
+    DATASET = "img_sample_2026_02_02_20_08_28"
     IMG_DIR = f"../img_output/{DATASET}/"
 
     img_files = glob(f"{IMG_DIR}*")

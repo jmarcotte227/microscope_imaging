@@ -4,7 +4,7 @@ from pathlib import Path
 class Stage:
     def __init__(self, port="COM5") -> None:
         self.speed = 3000
-        self.home_speed = 500
+        self.home_speed = 50
         self.mmc = pymmcore.CMMCore()
         # find file searchpath
         script_dir = Path(__file__).parent.absolute()
