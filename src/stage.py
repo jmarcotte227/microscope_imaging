@@ -1,6 +1,5 @@
 import pymmcore
 from pathlib import Path
-import time
 
 class Stage:
     def __init__(self, port="COM5") -> None:
@@ -24,7 +23,7 @@ class Stage:
 
         # Force synchronicity for startup
         self.mmc.initializeAllDevices()
-        self.busy_hold()
+        self.mmc.waitForDevice("XYStage")
 
         self.mmc.setProperty("XYStage", "Speed", f"{self.speed}")
         print("Stage Initialized")
@@ -33,23 +32,19 @@ class Stage:
     def move(self, x,y, blocking=True):
         self.mmc.setXYPosition("XYStage", x, y)
         if blocking:
-            self.busy_hold()
+            self.mmc.waitForDevice("XYStage")
 
     def home(self):
         self.mmc.home("XYStage")
         self.move(500,500)
         self.mmc.setProperty("XYStage", "Speed", f"{self.home_speed}")
         self.mmc.home("XYStage")
-        self.busy_hold()
+        self.mmc.waitForDevice("XYStage")
         self.mmc.setOriginXY("XYStage")
         self.mmc.setProperty("XYStage", "Speed", f"{self.speed}")
 
     def read_position(self):
         return self.mmc.getXYPosition("XYStage")
-
-    def busy_hold(self):
-        while self.mmc.deviceBusy("XYStage"):
-            time.sleep(0)
 
 if __name__=="__main__":
     stage = Stage()
