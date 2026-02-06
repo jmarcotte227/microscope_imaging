@@ -4,7 +4,7 @@ from pathlib import Path
 class Stage:
     def __init__(self, port="COM5") -> None:
         self.speed = 3000
-        self.home_speed = 50
+        self.home_speed = 500
         self.mmc = pymmcore.CMMCore()
         # find file searchpath
         script_dir = Path(__file__).parent.absolute()
@@ -36,19 +36,22 @@ class Stage:
 
     def home(self):
         self.mmc.home("XYStage")
-        self.move(500,500)
-        self.mmc.setProperty("XYStage", "Speed", f"{self.home_speed}")
-        self.mmc.home("XYStage")
+        # self.move(500,500)
+        # self.mmc.setProperty("XYStage", "Speed", f"{self.home_speed}")
+        # self.mmc.home("XYStage")
         self.mmc.waitForDevice("XYStage")
+
+        # self.mmc.setOriginXY("XYStage")
+        # self.mmc.setProperty("XYStage", "Speed", f"{self.speed}")
+    def set_origin(self):
         self.mmc.setOriginXY("XYStage")
-        self.mmc.setProperty("XYStage", "Speed", f"{self.speed}")
 
     def read_position(self):
         return self.mmc.getXYPosition("XYStage")
 
 if __name__=="__main__":
     stage = Stage()
-    stage.home()
+    # stage.home()
     i=0
     while True:
         print(stage.read_position())

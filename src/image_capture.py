@@ -9,8 +9,8 @@ if __name__=="__main__":
     # IMG_H = 350
     IMG_W = 450
     IMG_H = 400
-    START_X = 0
-    START_Y = 14000
+    START_X = 30000
+    START_Y = 30000
     NUM_X = 10
     NUM_Y = 15
     OUT_DIR = "../img_output/"
@@ -31,6 +31,8 @@ if __name__=="__main__":
     input("Enter to Home")
     stage.home()
     cam.stream()
+    input("Jog to the homing cross. Press enter to continue...")
+    stage.set_origin()
     pos_x, pos_y = stage.mmc.getXYPosition()
     #exit()
     print(f"Position: {pos_x:.2f}, {pos_y:.2f}")
