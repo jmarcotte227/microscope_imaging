@@ -4,6 +4,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 if __name__=="__main__":
+    X_RES = 1616  # pixels
+    Y_RES = 1216  # pixels
+    
     #################### MODIFY THESE ########################
     DATASET = "img_sample_2026_02_02_19_09_42"
     IMG_DIR = f"../img_output/{DATASET}/"
@@ -12,18 +15,17 @@ if __name__=="__main__":
     NUM_Y = 15
 
     
-    X_DIST = 600
-    Y_DIST = 540
+    X_DIST = 400
+    Y_DIST = 350
 
 
     X_SKEW = 20
     Y_SKEW = 20
-    um_p_pix = 1050/X_RES # um/pixels <<<<<< Replace this equation with imagej scale value
+    um_p_pix = 1/1.47 # um/pixels <<<<<< Replace this equation with imagej scale value
 
     ###########################################
 
-    X_RES = 1616 # pixels
-    Y_RES = 1216 # pixels
+
 
     stitched_img = np.zeros((int(np.ceil((NUM_Y*Y_RES))), int(np.ceil(NUM_X*X_RES))))
 
