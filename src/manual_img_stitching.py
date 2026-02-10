@@ -15,26 +15,35 @@ if __name__=="__main__":
     NUM_Y = 15
 
     
-    X_DIST = 400
-    Y_DIST = 350
+    X_DIST = 600
+    Y_DIST = 540
 
 
-    X_SKEW = 20
+    X_SKEW = -50
     Y_SKEW = 20
     um_p_pix = 1/1.47 # um/pixels <<<<<< Replace this equation with imagej scale value
 
     ###########################################
 
+    x_start_all = 0
+    y_start_all = 0
+    if X_SKEW<0:
+        y_start_all = -X_SKEW*NUM_X
 
+    if Y_SKEW<0:
+        x_start_all = -Y_SKEW*NUM_Y
 
-    stitched_img = np.zeros((int(np.ceil((NUM_Y*Y_RES))), int(np.ceil(NUM_X*X_RES))))
+    x_max = (NUM_X-1)*(X_DIST/um_p_pix)+NUM_Y*Y_SKEW+X_RES+x_start_all
+    y_max = (NUM_Y-1)*(Y_DIST/um_p_pix)+NUM_X*X_SKEW+Y_RES+y_start_all
+
+    stitched_img = np.zeros((int(y_max+y_start_all), int(x_max+x_start_all)))
 
     x_start = 0
     y_start = 0
     for i in range(NUM_X):
         for j in range(NUM_Y):
-            x_start = int(i*(X_DIST/um_p_pix)+j*Y_SKEW)
-            y_start = int(j*(Y_DIST/um_p_pix)+i*X_SKEW)
+            x_start = int(i*(X_DIST/um_p_pix)+j*Y_SKEW+x_start_all)
+            y_start = int(j*(Y_DIST/um_p_pix)+i*X_SKEW+y_start_all)
             img = cv2.imread(f"{IMG_DIR}img_{i}_{j}.png", cv2.IMREAD_GRAYSCALE)
             stitched_img[y_start:y_start+Y_RES, x_start:x_start+X_RES] = img[:,:]
 
