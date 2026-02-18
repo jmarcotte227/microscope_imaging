@@ -12,14 +12,19 @@ class Stage:
         self.mmc.loadDevice(port, "SerialManager", port)
         self.mmc.loadDevice("LudlController", "Ludl", "LudlController")
         self.mmc.loadDevice("XYStage", "Ludl", "XYStage")
+        self.mmc.loadDevice("Stage", "Ludl", "Stage")
+
         self.mmc.setProperty(port, "AnswerTimeout", "2000.0") 
         self.mmc.setProperty(port, "BaudRate", "9600")
         self.mmc.setProperty(port, "DelayBetweenCharsMs", "11.0")
         self.mmc.setProperty(port, "StopBits", "2")
 
 
+        print(self.mmc.getDevicePropertyNames("Stage"))
+        self.mmc.setProperty("Stage", "LudlSingleAxisName", "B")
         # 2. Initialize the Controller Hub first
         self.mmc.setProperty("LudlController", "Port", port)
+
 
         # Force synchronicity for startup
         self.mmc.initializeAllDevices()
@@ -49,10 +54,20 @@ class Stage:
     def read_position(self):
         return self.mmc.getXYPosition("XYStage")
 
+    def move_z_rel(self, z_inc, blocking=True):
+        self.mmc.setRelativePosition("Stage", z_inc)
+        if blocking:
+            self.mmc.waitForDevice("Stage")
+
 if __name__=="__main__":
-    stage = Stage()
+    stage = Stage("COM7")
     # stage.home()
     i=0
-    while True:
-        print(stage.read_position())
+    print(stage.read_position())
+    print(stage.mmc.getPosition("Stage"))
+    
+    stage.move_z_rel(500)
+    print(stage.mmc.getPosition("Stage"))
+
+
 
