@@ -41,7 +41,7 @@ class infinity_cam():
                     break
         cv2.destroyWindow('show')
 
-def autofocus(camera, stage, foc_inc = 500):
+def autofocus(camera, stage, foc_inc = 250):
     # capture first couple images to determine direction
     img = camera.cap_image()
     prev_lap = compute_laplacian(img)
@@ -55,22 +55,24 @@ def autofocus(camera, stage, foc_inc = 500):
     else:
         foc_dir = -1
 
+    print("Focusing...")
     prev_lap = lap
     while True:
         stage.move_z_rel(foc_inc*foc_dir)
         img = camera.cap_image()
         lap = compute_laplacian(img)
-        print("Lap: ", lap)
+        print(f"Laplace: {lap}", end='\r')
 
         if prev_lap > lap:
             if foc_inc <10:
                 stage.move_z_rel(foc_inc*foc_dir*-1)
                 break
             foc_dir = -1*foc_dir
-            foc_inc /= 2
+            foc_inc /= 3
             
         prev_lap = lap
-        time.sleep(0.2)
+        time.sleep(0.1)
+        print("Focused")
 
 def compute_laplacian(img):
     img = cv2.GaussianBlur(img, (7, 7), 0)

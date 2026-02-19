@@ -2,7 +2,7 @@ import cv2
 from glob import glob
 
 if __name__=="__main__":
-    DATASET = "img_sample_2026_02_02_20_08_28"
+    DATASET = "img_sample_2026_02_19_14_10_21"
     IMG_DIR = f"../img_output/{DATASET}/"
 
     img_files = glob(f"{IMG_DIR}*")
@@ -19,6 +19,6 @@ if __name__=="__main__":
 
     if status == cv2.Stitcher_OK:
         cv2.imwrite(f"../results/{DATASET}_stitched_img.jpg", result)
-        # cv2.imshow("img", result)
-        # cv2.waitKey(0)
+        cv2.imshow("img", result)
+        cv2.waitKey(0)
         print("Success")

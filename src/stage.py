@@ -20,7 +20,6 @@ class Stage:
         self.mmc.setProperty(port, "StopBits", "2")
 
 
-        print(self.mmc.getDevicePropertyNames("Stage"))
         self.mmc.setProperty("Stage", "LudlSingleAxisName", "B")
         # 2. Initialize the Controller Hub first
         self.mmc.setProperty("LudlController", "Port", port)

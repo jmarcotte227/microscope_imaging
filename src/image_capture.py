@@ -1,5 +1,5 @@
 import os
-from imaging import infinity_cam
+from imaging import infinity_cam, autofocus
 import cv2
 import datetime
 from stage import Stage
@@ -11,10 +11,11 @@ if __name__=="__main__":
     IMG_H = 400
     START_X = 30000
     START_Y = 30000
-    NUM_X = 10
-    NUM_Y = 15
+    NUM_X = 5
+    NUM_Y = 5
     OUT_DIR = "../img_output/"
     DISPLAY = True
+    AUTOFOCUS = True
 
     current_time = datetime.datetime.now()
     formatted_time = current_time.strftime('%Y_%m_%d_%H_%M_%S.%f')[:-7]
@@ -22,11 +23,11 @@ if __name__=="__main__":
     os.makedirs(logdata_dir)
 
     # load stage info
-    stage=Stage(port="COM5")
+    stage=Stage(port="COM7")
     stage.mmc.setTimeoutMs(20000)
 
     # load camera
-    cam = infinity_cam(0+cv2.CAP_DSHOW)
+    cam = infinity_cam(1+cv2.CAP_DSHOW)
 
     input("Enter to Home")
     stage.home()
@@ -52,7 +53,8 @@ if __name__=="__main__":
             print(f"Moving to ({START_X+i*IMG_W}, {START_Y+j*IMG_H})")
             stage.move(START_X+i*IMG_W, START_Y+j*IMG_H)
             #cam.stream()
-            img = cam.cap_image()
+            if AUTOFOCUS:
+                autofocus(cam, stage)
             img = cam.cap_image()
             cv2.imwrite(f'{logdata_dir}img_{i}_{j}.png', img)
 

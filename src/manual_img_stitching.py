@@ -8,7 +8,7 @@ if __name__=="__main__":
     Y_RES = 1216  # pixels
     
     #################### MODIFY THESE ########################
-    DATASET = "img_sample_2026_02_02_19_09_42"
+    DATASET = "img_sample_2026_02_19_14_10_21"
     IMG_DIR = f"../img_output/{DATASET}/"
 
     NUM_X = 10
@@ -21,7 +21,8 @@ if __name__=="__main__":
 
     X_SKEW = -50
     Y_SKEW = 20
-    um_p_pix = 1/1.47 # um/pixels <<<<<< Replace this equation with imagej scale value
+    # um_p_pix = 1/1.47 # um/pixels <<<<<< Replace this equation with imagej scale value
+    um_p_pix = 1/1.47/2 # um/pixels <<<<<< Replace this equation with imagej scale value
 
     ###########################################
 
