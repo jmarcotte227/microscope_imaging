@@ -61,7 +61,7 @@ def autofocus(camera, stage, foc_inc = 250):
         stage.move_z_rel(foc_inc*foc_dir)
         img = camera.cap_image()
         lap = compute_laplacian(img)
-        print(f"Laplace: {lap}", end='\r')
+        print(f"Laplace: {lap}")
 
         if prev_lap > lap:
             if foc_inc <10:
@@ -71,8 +71,8 @@ def autofocus(camera, stage, foc_inc = 250):
             foc_inc /= 3
             
         prev_lap = lap
-        time.sleep(0.1)
-        print("Focused")
+        # time.sleep(0.01)
+    print("Focused")
 
 def compute_laplacian(img):
     img = cv2.GaussianBlur(img, (7, 7), 0)

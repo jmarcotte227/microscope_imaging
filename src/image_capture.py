@@ -7,11 +7,23 @@ from stage import Stage
 if __name__=="__main__":
     # IMG_W = 350
     # IMG_H = 350
-    IMG_W = 450
-    IMG_H = 400
+
+    # 10X
+    # IMG_W = 450
+    # IMG_H = 400
+
+    # 20x
+    # IMG_W = 225
+    # IMG_H = 200
+
+    # 50x
+    IMG_W = 90
+    IMG_H = 80
+
     START_X = 30000
     START_Y = 30000
     NUM_X = 5
+
     NUM_Y = 5
     OUT_DIR = "../img_output/"
     DISPLAY = True
@@ -23,17 +35,18 @@ if __name__=="__main__":
     os.makedirs(logdata_dir)
 
     # load stage info
-    stage=Stage(port="COM7")
+    stage=Stage(port="COM5")
     stage.mmc.setTimeoutMs(20000)
 
     # load camera
-    cam = infinity_cam(1+cv2.CAP_DSHOW)
-
-    input("Enter to Home")
-    stage.home()
-    cam.stream()
-    input("Jog to the homing cross. Press enter to continue...")
-    stage.set_origin()
+    print("Here")
+    cam = infinity_cam(0+cv2.CAP_DSHOW)
+    print("Camera")
+    # input("Enter to Home")
+    # stage.home()
+    # cam.stream()
+    # input("Jog to the homing cross. Press enter to continue...")
+    # stage.set_origin()
     pos_x, pos_y = stage.mmc.getXYPosition()
     #exit()
     print(f"Position: {pos_x:.2f}, {pos_y:.2f}")
@@ -54,7 +67,7 @@ if __name__=="__main__":
             stage.move(START_X+i*IMG_W, START_Y+j*IMG_H)
             #cam.stream()
             if AUTOFOCUS:
-                autofocus(cam, stage)
+                autofocus(cam, stage, 100)
             img = cam.cap_image()
             cv2.imwrite(f'{logdata_dir}img_{i}_{j}.png', img)
 
